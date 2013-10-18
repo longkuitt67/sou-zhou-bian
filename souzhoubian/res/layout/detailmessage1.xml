@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/bg_title_bar">
+
+        <ImageButton
+                android:id="@+id/DetailBack"
+                android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:background="@drawable/buttonpress"
+                     android:layout_centerVertical="true"
+                     android:layout_marginLeft="5dp"
+                     android:src="@drawable/ic_nav_back">
+        </ImageButton>
+        <TextView android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:text="详细信息"
+                  android:gravity="center"
+                  android:textSize="20dp"
+                  android:textColor="#ffffff"
+                  android:layout_marginTop="8dp"
+                >
+        </TextView>
+        <ImageButton
+                android:id="@+id/mapButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/buttonpress"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/ic_action_route">
+        </ImageButton>
+    </RelativeLayout>
+
+
+
+        <RadioGroup
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:id="@+id/main_radio"
+                android:background="@drawable/tab_item_selected"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+            <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/radio_button0"
+
+                    android:layout_marginTop="2.0dip"
+                    android:text="步行"
+                    android:button="@drawable/ic_byfoot"
+                    android:background="@drawable/layoutbyfoot"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:checked="true"></RadioButton>
+            <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/radio_button1"
+                    android:tag="radio_button1"
+                    android:layout_marginTop="2.0dip"
+                    android:text="公交"
+                    android:button="@null"
+                    android:background="@drawable/layoutbyfoot"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    ></RadioButton>
+            <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/radio_button2"
+                    android:tag="radio_button2"
+                    android:layout_marginTop="2.0dip"
+                    android:text="驾车"
+                    android:button="@drawable/ic_bycar"
+                    android:gravity="center"
+                    android:background="@drawable/layoutbyfoot"
+                    android:layout_weight="1"
+                    ></RadioButton>
+        </RadioGroup>
+
+    <LinearLayout android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#50ffffff">
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="全程约1.2公里，耗时约20分钟"
+            android:paddingLeft="10dp"
+            android:background="#50ffffff"
+            >
+    </TextView>
+    </LinearLayout>
+
+
+        <com.baidu.mapapi.map.MapView android:id="@+id/bmapView1"
+                                      android:layout_width="fill_parent"
+                                      android:layout_height="fill_parent"
+
+                />
+
+
+</LinearLayout>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/bg_title_bar">
+
+        <ImageButton android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:background="@drawable/buttonpress"
+                     android:layout_centerVertical="true"
+                     android:layout_marginLeft="5dp"
+                     android:src="@drawable/ic_nav_back">
+        </ImageButton>
+        <TextView android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:text="详细信息"
+                  android:gravity="center"
+                  android:textSize="20dp"
+                  android:textColor="#ffffff"
+                  android:layout_marginTop="8dp"
+                >
+        </TextView>
+        <ImageButton
+                android:id="@+id/mapButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/buttonpress"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/ic_action_route">
+        </ImageButton>
+    </RelativeLayout>
+
+    <TabHost android:id="@+id/tabs" android:layout_width="fill_parent"
+             android:layout_height="fill_parent">
+        <LinearLayout android:layout_width="fill_parent"
+                      android:layout_height="fill_parent"
+                      android:orientation="vertical">
+                <TabWidget android:id="@android:id/tabs"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content" >
+                </TabWidget>
+
+            <FrameLayout android:id="@android:id/tabcontent"
+                         android:layout_width="fill_parent"
+                         android:layout_weight="1"
+                         android:layout_height="0dp">
+                <LinearLayout android:id="@+id/content1"
+                              android:layout_width="fill_parent"
+                              android:layout_height="fill_parent">
+
+                </LinearLayout>
+                <LinearLayout android:id="@+id/content2"
+                              android:layout_width="fill_parent"
+                              android:layout_height="fill_parent">
+
+                </LinearLayout>
+                <LinearLayout android:id="@+id/content3"
+                              android:layout_width="fill_parent"
+                              android:layout_height="fill_parent">
+
+                </LinearLayout>
+            </FrameLayout>
+
+        </LinearLayout>
+    </TabHost>
+
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="全程约1.2公里，耗时约20分钟"
+            android:background="#50ffffff"
+            >
+    </TextView>
+    <RelativeLayout android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+    <com.baidu.mapapi.map.MapView android:id="@+id/bmapView"
+                                  android:layout_width="fill_parent"
+                                  android:layout_height="fill_parent"
+
+            />
+    </RelativeLayout>
+</LinearLayout>

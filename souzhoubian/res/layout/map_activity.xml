@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/bg_title_bar">
+
+        <ImageButton
+                android:id="@+id/mapViewBack"
+                android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:background="@drawable/buttonpress"
+                     android:layout_centerVertical="true"
+                     android:layout_marginLeft="5dp"
+                     android:src="@drawable/ic_nav_back">
+        </ImageButton>
+        <TextView android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:text="四川(川菜)"
+                  android:gravity="center"
+                  android:textSize="20dp"
+                  android:textColor="#ffffff"
+                  android:layout_marginTop="8dp"
+                >
+        </TextView>
+        <ImageButton
+                android:id="@+id/listButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/buttonpress"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/ic_action_list">
+        </ImageButton>
+        <ImageButton
+                android:id="@+id/refreshButtonOnMap"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/buttonpress"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@id/listButton"
+                android:src="@drawable/ic_refresh"
+                >
+        </ImageButton>
+    </RelativeLayout>
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:background="@drawable/bg_tab_top"
+            >
+        <TextView
+                android:id="@+id/fanwei"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="范围:3000m内"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                >
+        </TextView>
+        <Button
+                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_arrow_down"
+                android:layout_toRightOf="@id/fanwei"
+                android:layout_centerVertical="true"
+                android:onClick="Dialog">
+        </Button>
+    </RelativeLayout>
+
+
+
+    <RelativeLayout android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+        <com.baidu.mapapi.map.MapView android:id="@+id/bmapView"
+                                      android:layout_width="fill_parent"
+                                      android:layout_height="fill_parent"
+
+                />
+
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:id="@+id/linearLayout">
+            <Button
+                    android:id="@+id/leftButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/leftbuttonpress">
+            </Button>
+        </LinearLayout>
+        <Button android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rightbuttonpress"
+                android:layout_gravity="center_horizontal|top"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="67dp"
+                android:layout_alignTop="@+id/linearLayout">
+        </Button>
+
+
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/findposition"
+                android:layout_alignRight="@+id/bmapView"
+                android:layout_alignTop="@+id/linearLayout"
+                android:layout_marginRight="10dp">
+        </Button>
+    </RelativeLayout>
+</LinearLayout>
