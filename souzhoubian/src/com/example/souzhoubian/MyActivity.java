@@ -3,9 +3,11 @@ package com.example.souzhoubian;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -16,22 +18,33 @@ import com.baidu.mapapi.BMapManager;
 import com.baidu.mapapi.MKGeneralListener;
 import com.baidu.mapapi.map.*;
 import com.baidu.platform.comapi.basestruct.GeoPoint;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class MyActivity extends Activity {
 
     /**
      * Called when the activity is first created.
      */
-
+    private static final int SUCCESS = 0;
+    private static final int ERROR_SERVER = 1;
+    private static final int ERROR_DATA_FORMAT = 2;
     private ListView listView;
     private ImageButton ic_action_map;
     private ImageButton mainBackButton;
     private ArrayList<HashMap<String, ?>> data = new ArrayList<HashMap<String, ?>>();
     private View mapview;
-    private boolean flag=true;
+    private boolean flag = true;
 
     private BMapManager bMapManager;
     public static final String strKey = "AB0f4e783ab452277aa2d7deb9517554";
@@ -43,11 +56,16 @@ public class MyActivity extends Activity {
     private MyLocationOverlay myLocationOverlay;
     private ImageButton refreshBar;
     private AlertDialog loginDialog;
+    private SimpleAdapter simpleAdapter;
 
     private LinearLayout jump;
     private TextView showTextView;
     int selectedFruitIndex = 0;
     private ImageButton contentButton;
+
+     List<HashMap<String,String>> list=new ArrayList<HashMap<String, String>>();
+
+
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,7 +94,6 @@ public class MyActivity extends Activity {
         if (!initResult) {
             Toast.makeText(MapApplication.getInstance().getApplicationContext(), "BMapManager  初始化错误!", Toast.LENGTH_LONG).show();
         }
-
 
 
         setContentView(R.layout.main);
@@ -130,38 +147,121 @@ public class MyActivity extends Activity {
         mapView.addView(mapPopWindow);
 
 
-
         myLocationOverlay = new MyLocationOverlay(getResources().getDrawable(R.drawable.ic_loc_normal), mapView);
         mapView.getOverlays().add(myLocationOverlay);
 
 
 
-
-
-
-        listView();
         Map();
         ProgressBar();
         mainBack();
 
 
         DetailMapView();
+        listView();
+
+        JsonTask("https://api.weibo.com/2/location/pois/search/by_geo.json?q=理想国际大厦&access_token=2.0049soLEchqxNE76806c7cb8ype3hB&coordinate=116.322479%2C39.980781");
+
+
     }
-    public void DetailMapView(){
-        jump=(LinearLayout)findViewById(R.id.Jump);
+
+    public void JsonTask(String url) {
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("加载中...");
+        final String url_name = url;
+        AsyncTask<Integer, Integer, Integer> task = new AsyncTask<Integer, Integer, Integer>() {
+            @Override
+            protected Integer doInBackground(Integer... integers) {
+                try {
+
+                    String result = requestServerData(url_name);
+                    JSONObject jsonObject = new JSONObject(result);
+                    JSONArray jsonArray = (JSONArray) jsonObject.get("poilist");
+                    for(int i=0;i<jsonArray.length();i++){
+                        HashMap<String,String>data=new HashMap<String, String>();
+                        JSONObject o = (JSONObject) jsonArray.get(i);
+
+                        data.put("name",o.getString("name"));
+                        data.put("address",o.getString("address"));
+                        data.put("distance", o.getString("distance"));
+                        Log.d("","name"+o.getString("name"));
+                        Log.d("","address"+o.getString("address"));
+                        Log.d("","distance"+o.getString("distance"));
+                        list.add(data);
+                    }
+                } catch (IOException e) {
+                    Log.e("", "Request server data error", e);
+
+                    return ERROR_SERVER;
+                } catch (JSONException e) {
+                    Log.e("", "Format data error", e);
+
+                    return ERROR_DATA_FORMAT;
+                }
+
+                return SUCCESS;
+            }
+
+           ;
+            @Override
+            protected void onPreExecute() {
+                progressDialog.show();
+            }
+
+            @Override
+            protected void onPostExecute(Integer result) {
+                progressDialog.dismiss();
+               simpleAdapter.notifyDataSetChanged();
+//
+//                if (result == SUCCESS) {
+//                    //跳转到展示界面
+//                    gotoDetail(downloadPath, ImageViewerActivity.IMAGE_SOURCE_TEMP);
+//
+//                } else if (result == ERROR_SERVER) {
+//                    showServerErrorMessage();
+//                } else if (result == ERROR_DATA_FORMAT) {
+//                    showDataErrorMessage();
+//                }
+            }
+        };
+
+        task.execute(0);
+
+    }
+    private void showServerErrorMessage() {
+        Toast.makeText(this, "请求数据失败", Toast.LENGTH_LONG).show();
+    }
+
+    private void showDataErrorMessage() {
+        Toast.makeText(this, "数据格式错误", Toast.LENGTH_LONG).show();
+    }
+    private String requestServerData(String url) throws IOException {
+        //请求服务器
+        HttpGet request = new HttpGet(url);
+
+        DefaultHttpClient httpClient = new DefaultHttpClient();
+
+        HttpResponse response = httpClient.execute(request);
+        String resultStr = EntityUtils.toString(response.getEntity(), "UTF-8");
+
+        return resultStr;
+    }
+
+    public void DetailMapView() {
+        jump = (LinearLayout) findViewById(R.id.Jump);
         jump.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent();
-                intent.setClass(MyActivity.this,DetailActivity.class);
+                Intent intent = new Intent();
+                intent.setClass(MyActivity.this, DetailActivity.class);
                 startActivity(intent);
             }
         });
     }
 
-    public void ProgressBar(){
-         refreshBar=(ImageButton)findViewById(R.id.refreshButtonOnActivity);
-         refreshBar.setOnClickListener(new View.OnClickListener() {
+    public void ProgressBar() {
+        refreshBar = (ImageButton) findViewById(R.id.refreshButtonOnActivity);
+        refreshBar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(MyActivity.this);
@@ -180,8 +280,9 @@ public class MyActivity extends Activity {
             }
         });
     }
-    public void Map(){
-        ic_action_map=(ImageButton)findViewById(R.id.mapButton);
+
+    public void Map() {
+        ic_action_map = (ImageButton) findViewById(R.id.mapButton);
         ic_action_map.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -205,27 +306,28 @@ public class MyActivity extends Activity {
             }
         });
     }
+
     public void Dialog(View v) {
         String args[] = new String[]{"1000m内", "2000m内", "3000m内", "4000m内", "5000m内"};
-        showTextView=(TextView)findViewById(R.id.fanwei);
-       final Dialog alertDialog = new AlertDialog.Builder(this).
+        showTextView = (TextView) findViewById(R.id.fanwei);
+        final Dialog alertDialog = new AlertDialog.Builder(this).
                 setTitle("选择范围")
                 .setIcon(android.R.drawable.ic_menu_more)
-                .setSingleChoiceItems(args, 0, new DialogInterface.OnClickListener(){
+                .setSingleChoiceItems(args, 0, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        selectedFruitIndex=which;
+                        selectedFruitIndex = which;
                         dialog.dismiss();
 
-                        if(selectedFruitIndex==0){
+                        if (selectedFruitIndex == 0) {
                             showTextView.setText("范围:1000m内");
-                        }else if(selectedFruitIndex==1){
+                        } else if (selectedFruitIndex == 1) {
                             showTextView.setText("范围:2000m内");
-                        } else if(selectedFruitIndex==2){
+                        } else if (selectedFruitIndex == 2) {
                             showTextView.setText("范围:3000m内");
-                        } else if(selectedFruitIndex==3){
+                        } else if (selectedFruitIndex == 3) {
                             showTextView.setText("范围:4000m内");
-                        } else if(selectedFruitIndex==4){
+                        } else if (selectedFruitIndex == 4) {
                             showTextView.setText("范围:5000m内");
                         }
                     }
@@ -233,33 +335,19 @@ public class MyActivity extends Activity {
         alertDialog.show();
 
 
-
     }
 
     public void listView() {
         listView = (ListView) findViewById(R.id.listView);
-        for (int i = 0; i < 20; i++) {
-            HashMap<String, Object> item = new HashMap<String, Object>();
-            item.put("title", "黄记煌三汁焖锅");
-            item.put("address", "西安南大街52号南附楼内3层” ");
-            item.put("fanwei", " 500m");
-            if (i == 1) {
-                item.put("title", "香港私家菜天子海鲜火锅 " + i);
-                item.put("address", "南大街 " + i + " " + i);
-                item.put("fanwei", "500m");
-                data.add(item);
-                continue;
-            }
-            data.add(item);
-        }
-        SimpleAdapter adapter = new SimpleAdapter(this,
-                data,
+
+        simpleAdapter = new SimpleAdapter(this,
+                list,
                 R.layout.chat_item,
-                new String[]{"title", "address", "fanwei"},
+                new String[]{"name", "address", "distance"},
                 new int[]{R.id.TittleText, R.id.AddressMessage, R.id.fanwei});
 
 
-        listView.setAdapter(adapter);
+        listView.setAdapter(simpleAdapter);
 
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -274,12 +362,13 @@ public class MyActivity extends Activity {
         });
 
     }
-    public void mainBack(){
+
+    public void mainBack() {
         mainBackButton = (ImageButton) findViewById(R.id.main_back);
         mainBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                   MyActivity.this.finish();
+                MyActivity.this.finish();
 
 
             }
