@@ -13,11 +13,11 @@
         <ImageButton
                 android:id="@+id/DetailBack"
                 android:layout_width="wrap_content"
-                     android:layout_height="wrap_content"
-                     android:background="@drawable/buttonpress"
-                     android:layout_centerVertical="true"
-                     android:layout_marginLeft="5dp"
-                     android:src="@drawable/ic_nav_back">
+                android:layout_height="wrap_content"
+                android:background="@drawable/buttonpress"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dp"
+                android:src="@drawable/ic_nav_back">
         </ImageButton>
         <TextView android:layout_width="match_parent"
                   android:layout_height="wrap_content"
@@ -42,70 +42,134 @@
 
 
 
-        <RadioGroup
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:id="@+id/main_radio"
-                android:background="@drawable/tab_item_selected"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content">
-            <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/radio_button0"
+    <RadioGroup
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:id="@+id/main_radio"
+            android:background="@drawable/tab_item_selected"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+        <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/radio_button0"
 
-                    android:layout_marginTop="2.0dip"
-                    android:text="步行"
-                    android:button="@drawable/ic_byfoot"
-                    android:background="@drawable/layoutbyfoot"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:checked="true"></RadioButton>
-            <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/radio_button1"
-                    android:tag="radio_button1"
-                    android:layout_marginTop="2.0dip"
-                    android:text="公交"
-                    android:button="@null"
-                    android:background="@drawable/layoutbyfoot"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    ></RadioButton>
-            <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/radio_button2"
-                    android:tag="radio_button2"
-                    android:layout_marginTop="2.0dip"
-                    android:text="驾车"
-                    android:button="@drawable/ic_bycar"
-                    android:gravity="center"
-                    android:background="@drawable/layoutbyfoot"
-                    android:layout_weight="1"
-                    ></RadioButton>
-        </RadioGroup>
+                android:layout_marginTop="2.0dip"
+                android:text="步行"
+                android:button="@drawable/ic_byfoot"
+                android:background="@drawable/layoutbyfoot"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:checked="true"></RadioButton>
+        <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/radio_button1"
+                android:tag="radio_button1"
+                android:layout_marginTop="2.0dip"
+                android:text="公交"
+                android:button="@null"
+                android:background="@drawable/layoutbyfoot"
+                android:layout_weight="1"
+                android:gravity="center"
+                ></RadioButton>
+        <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/radio_button2"
+                android:tag="radio_button2"
+                android:layout_marginTop="2.0dip"
+                android:text="驾车"
+                android:button="@drawable/ic_bycar"
+                android:gravity="center"
+                android:background="@drawable/layoutbyfoot"
+                android:layout_weight="1"
+                ></RadioButton>
+    </RadioGroup>
 
-    <LinearLayout android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#50ffffff">
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="全程约1.2公里，耗时约20分钟"
-            android:paddingLeft="10dp"
-            android:background="#50ffffff"
+    <RelativeLayout android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
             >
-    </TextView>
-    </LinearLayout>
-
 
         <com.baidu.mapapi.map.MapView android:id="@+id/bmapView1"
                                       android:layout_width="fill_parent"
                                       android:layout_height="fill_parent"
 
                 />
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:background="#50464C4D"
+                >
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="全程约1.2公里，耗时约20分钟"
+                    android:paddingLeft="10dp"
+                    android:textColor="#ffffff"
+
+
+                    >
+            </TextView>
+        </LinearLayout>
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_alignParentBottom="true">
+            <LinearLayout android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:orientation="vertical"
+                          android:background="#50464C4D"
+                          >
+                <TextView android:layout_width="wrap_content"
+                          android:layout_marginTop="10dp"
+                          android:layout_height="wrap_content"
+                          android:text="黄记煌三汁焖锅"
+                          android:textSize="20dp"
+                          android:textColor="#ffffff">
+                </TextView>
+                <TextView android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:text="西安南大街52号南附楼内3层"
+                          android:layout_marginBottom="10dp"
+                          android:textColor="#ffffff"
+                        >
+                </TextView>
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:orientation="vertical"
+                      android:layout_alignParentBottom="true">
+
+
+        </LinearLayout>
+
+    </RelativeLayout>
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="horizontal"
+                  android:background="@drawable/bg_tab_top">
+        <ImageButton android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:background="@drawable/ic_phone"
+                     android:layout_gravity="center"
+                >
+        </ImageButton>
+        <TextView android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_gravity="center"
+                  android:text="029-33212273"
+                  android:layout_marginLeft="10dp"
+                  android:textColor="#000000">
+        </TextView>
+
+
+    </LinearLayout>
+
+
+
 
 
 </LinearLayout>

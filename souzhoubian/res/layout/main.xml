@@ -10,7 +10,9 @@
             android:orientation="horizontal"
             android:background="@drawable/bg_title_bar">
 
-            <ImageButton android:layout_width="wrap_content"
+            <ImageButton
+                    android:id="@+id/main_back"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/buttonpress"
                     android:layout_centerVertical="true"
@@ -36,6 +38,16 @@
                 android:layout_marginRight="10dp"
                 android:src="@drawable/ic_action_map">
         </ImageButton>
+        <!--<ImageButton-->
+                <!--android:id="@+id/contentButton"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:background="@drawable/buttonpress"-->
+                <!--android:layout_alignParentRight="true"-->
+                <!--android:layout_centerVertical="true"-->
+                <!--android:layout_marginRight="10dp"-->
+                <!--android:src="@drawable/ic_action_list">-->
+        <!--</ImageButton>-->
         <ImageButton
                 android:id="@+id/refreshButtonOnActivity"
                 android:layout_width="wrap_content"
@@ -83,6 +95,50 @@
             android:layout_height="match_parent"
             >
     </ListView>
+        <RelativeLayout android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+               android:id="@+id/mapparent"
+                android:visibility="gone">
+            <com.baidu.mapapi.map.MapView android:id="@+id/bmapView"
+                                          android:layout_width="fill_parent"
+                                          android:layout_height="fill_parent"
+
+                    />
+
+            <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:id="@+id/linearLayout">
+                <Button
+                        android:id="@+id/leftButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/leftbuttonpress">
+                </Button>
+            </LinearLayout>
+            <Button android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rightbuttonpress"
+                    android:layout_gravity="center_horizontal|top"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="67dp"
+                    android:layout_alignTop="@+id/linearLayout">
+            </Button>
+
+
+            <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/findposition"
+                    android:layout_alignRight="@+id/bmapView"
+                    android:layout_alignTop="@+id/linearLayout"
+                    android:layout_marginRight="10dp">
+            </Button>
+        </RelativeLayout>
         </LinearLayout>
 </LinearLayout>
 

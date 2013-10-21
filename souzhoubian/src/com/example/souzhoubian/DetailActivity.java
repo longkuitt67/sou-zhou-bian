@@ -1,23 +1,18 @@
 package com.example.souzhoubian;
 
 import android.app.Activity;
-import android.app.ActivityGroup;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TabHost;
-import android.widget.TextView;
 import android.widget.Toast;
 import com.baidu.mapapi.BMapManager;
 import com.baidu.mapapi.MKGeneralListener;
 import com.baidu.mapapi.map.*;
 import com.baidu.mapapi.search.MKRoute;
 import com.baidu.platform.comapi.basestruct.GeoPoint;
-
-import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
