@@ -13,6 +13,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.*;
 import com.baidu.mapapi.BMapManager;
 import com.baidu.mapapi.MKGeneralListener;
@@ -57,20 +58,18 @@ public class MyActivity extends Activity {
     private ImageButton refreshBar;
     private AlertDialog loginDialog;
     private SimpleAdapter simpleAdapter;
-
+    private int page=1;
     private LinearLayout jump;
     private TextView showTextView;
     int selectedFruitIndex = 0;
     private ImageButton contentButton;
 
-     List<HashMap<String,String>> list=new ArrayList<HashMap<String, String>>();
-
+    List<HashMap<String,String>> list=new ArrayList<HashMap<String, String>>();
+    private String myActivityName;
 
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        BMapManager bMapManager = new BMapManager(this);
-//        bMapManager.init("20deb62852b3e32be20f587e798849db",null);
 
         bMapManager = new BMapManager(this);
         boolean initResult = bMapManager.init(strKey, new MKGeneralListener() {
@@ -95,8 +94,18 @@ public class MyActivity extends Activity {
             Toast.makeText(MapApplication.getInstance().getApplicationContext(), "BMapManager  初始化错误!", Toast.LENGTH_LONG).show();
         }
 
-
         setContentView(R.layout.main);
+
+
+        myActivityName =  getIntent().getStringExtra("name");
+        TextView title= (TextView) findViewById(R.id.main_activity);
+        title.setText(myActivityName);
+
+//        String myActivityName1 =  getIntent().getStringExtra("cententName");
+//        TextView title1= (TextView) findViewById(R.id.main_activity);
+//        title1.setText(myActivityName1);
+
+
         mapview = findViewById(R.id.mapparent);
         layoutInflater = LayoutInflater.from(this);
 
@@ -160,20 +169,20 @@ public class MyActivity extends Activity {
         DetailMapView();
         listView();
 
-        JsonTask("https://api.weibo.com/2/location/pois/search/by_geo.json?q=理想国际大厦&access_token=2.0049soLEchqxNE76806c7cb8ype3hB&coordinate=116.322479%2C39.980781");
+        JsonTask("https://api.weibo.com/2/location/pois/search/by_geo.json?q="+myActivityName+"&access_token=2.0049soLEchqxNE76806c7cb8ype3hB&coordinate=108.95000%2C34.26667"+"&range="+3000,page);
 
 
     }
 
-    public void JsonTask(String url) {
+    public void JsonTask(String url,int page) {
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("加载中...");
-        final String url_name = url;
+        final String url_name = url+"&page="+page;
         AsyncTask<Integer, Integer, Integer> task = new AsyncTask<Integer, Integer, Integer>() {
             @Override
             protected Integer doInBackground(Integer... integers) {
                 try {
-
+                   // list = new ArrayList<HashMap<String, String>>();
                     String result = requestServerData(url_name);
                     JSONObject jsonObject = new JSONObject(result);
                     JSONArray jsonArray = (JSONArray) jsonObject.get("poilist");
@@ -202,7 +211,7 @@ public class MyActivity extends Activity {
                 return SUCCESS;
             }
 
-           ;
+            ;
             @Override
             protected void onPreExecute() {
                 progressDialog.show();
@@ -211,7 +220,9 @@ public class MyActivity extends Activity {
             @Override
             protected void onPostExecute(Integer result) {
                 progressDialog.dismiss();
-               simpleAdapter.notifyDataSetChanged();
+                Log.d("sssss",list.toString());
+
+                simpleAdapter.notifyDataSetChanged();
 //
 //                if (result == SUCCESS) {
 //                    //跳转到展示界面
@@ -316,19 +327,26 @@ public class MyActivity extends Activity {
                 .setSingleChoiceItems(args, 0, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                       // list = new ArrayList<HashMap<String, String>>();
+
                         selectedFruitIndex = which;
                         dialog.dismiss();
 
                         if (selectedFruitIndex == 0) {
                             showTextView.setText("范围:1000m内");
+                            JsonTask("https://api.weibo.com/2/location/pois/search/by_geo.json?q="+myActivityName+"&access_token=2.0049soLEchqxNE76806c7cb8ype3hB&coordinate=108.95000%2C34.26667"+"&range="+1000,page);
                         } else if (selectedFruitIndex == 1) {
                             showTextView.setText("范围:2000m内");
+                            JsonTask("https://api.weibo.com/2/location/pois/search/by_geo.json?q="+myActivityName+"&access_token=2.0049soLEchqxNE76806c7cb8ype3hB&coordinate=108.95000%2C34.26667"+"&range="+2000,page);
                         } else if (selectedFruitIndex == 2) {
                             showTextView.setText("范围:3000m内");
+                            JsonTask("https://api.weibo.com/2/location/pois/search/by_geo.json?q="+myActivityName+"&access_token=2.0049soLEchqxNE76806c7cb8ype3hB&coordinate=108.95000%2C34.26667"+"&range="+3000,page);
                         } else if (selectedFruitIndex == 3) {
                             showTextView.setText("范围:4000m内");
+                            JsonTask("https://api.weibo.com/2/location/pois/search/by_geo.json?q="+myActivityName+"&access_token=2.0049soLEchqxNE76806c7cb8ype3hB&coordinate=108.95000%2C34.26667"+"&range="+4000,page);
                         } else if (selectedFruitIndex == 4) {
                             showTextView.setText("范围:5000m内");
+                            JsonTask("https://api.weibo.com/2/location/pois/search/by_geo.json?q="+myActivityName+"&access_token=2.0049soLEchqxNE76806c7cb8ype3hB&coordinate=108.95000%2C34.26667"+"&range="+5000,page);
                         }
                     }
                 }).create();
@@ -339,27 +357,53 @@ public class MyActivity extends Activity {
 
     public void listView() {
         listView = (ListView) findViewById(R.id.listView);
-
+        LinearLayout view1= (LinearLayout) LayoutInflater.from(this).inflate(R.layout.otherbutton,listView,false);
+        TextView otherText=(TextView)view1.findViewById(R.id.otherText);
+        otherText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                  page++;
+                JsonTask("https://api.weibo.com/2/location/pois/search/by_geo.json?q="+myActivityName+"&access_token=2.0049soLEchqxNE76806c7cb8ype3hB&coordinate=108.95000%2C34.26667",page);
+            }
+        });
+        listView.addFooterView(view1);
         simpleAdapter = new SimpleAdapter(this,
                 list,
                 R.layout.chat_item,
                 new String[]{"name", "address", "distance"},
-                new int[]{R.id.TittleText, R.id.AddressMessage, R.id.fanwei});
+                new int[]{R.id.TittleText, R.id.AddressMessage, R.id.fanwei}){
+
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View view=super.getView(position, convertView, parent);
+                view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        listView.setVisibility(View.GONE);
+                        mapview.setVisibility(View.VISIBLE);
+                        ic_action_map.setImageResource(R.drawable.ic_action_list);
+                        flag = false;
+                    }
+                });
+                return view;    //To change body of overridden methods use File | Settings | File Templates.
+            }
+        };
 
 
         listView.setAdapter(simpleAdapter);
 
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position,
-                                    long itemId) {
-                listView.setVisibility(View.GONE);
-                mapview.setVisibility(View.VISIBLE);
-                flag = false;
-            }
-        });
+//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int position,
+//                                    long itemId) {
+//                listView.setVisibility(View.GONE);
+//                mapview.setVisibility(View.VISIBLE);
+//                ic_action_map.setImageResource(R.drawable.ic_action_list);
+//                flag = false;
+//            }
+//        });
 
     }
 

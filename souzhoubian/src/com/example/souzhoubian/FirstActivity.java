@@ -3,6 +3,7 @@ package com.example.souzhoubian;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -41,15 +42,19 @@ public class FirstActivity extends Activity {
         new String[]{"text"},
         new int[]{R.id.firstTextView}){
             @Override
-            public View getView( final int position, View convertView, ViewGroup parent) {
+            public View getView(final int position, View convertView, ViewGroup parent) {
                 View view =super.getView(position, convertView, parent);
                 button=(Button)view.findViewById(R.id.step) ;
 
                 view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+//                        TextView textView = (TextView) view.findViewById(R.id.firstTextView);
+//                        Log.d("view.setOnClickListener",textView.getText().toString());
+
                         Intent intent=new Intent();
                         intent.setClass(FirstActivity.this,MyActivity.class);
+                        intent.putExtra("name",data.get(position).get("text").toString());
                         startActivity(intent);
                     }
                 });
@@ -58,8 +63,7 @@ public class FirstActivity extends Activity {
                     @Override
                     public void onClick(View view) {
                         Intent intent=new Intent();
-
-                        intent.setClass(FirstActivity.this,SecondaryActivity.class);
+                        intent.setClass(FirstActivity.this, SecondaryActivity.class);
                         intent.putExtra("name",data.get(position).get("text").toString()) ;
                         startActivityForResult(intent,RESULT_OK);
 //                        startActivity(intent);
@@ -70,6 +74,7 @@ public class FirstActivity extends Activity {
             }
         };
         listView.setAdapter(adapter);
+
 
         aboutButton= (ImageButton) findViewById(R.id.setting);
         aboutButton.setOnClickListener(new View.OnClickListener() {

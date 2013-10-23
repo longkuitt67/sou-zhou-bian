@@ -10,16 +10,17 @@
             android:orientation="horizontal"
             android:background="@drawable/bg_title_bar">
 
-            <ImageButton
-                    android:id="@+id/main_back"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/buttonpress"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="5dp"
-                    android:src="@drawable/ic_nav_back">
-            </ImageButton>
-        <TextView android:layout_width="match_parent"
+        <ImageButton
+                android:id="@+id/main_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/buttonpress"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dp"
+                android:src="@drawable/ic_nav_back">
+        </ImageButton>
+        <TextView android:id="@+id/main_activity"
+                  android:layout_width="match_parent"
                   android:layout_height="wrap_content"
                   android:text="四川(川菜)"
                   android:gravity="center"
@@ -38,16 +39,7 @@
                 android:layout_marginRight="10dp"
                 android:src="@drawable/ic_action_map">
         </ImageButton>
-        <!--<ImageButton-->
-                <!--android:id="@+id/contentButton"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:background="@drawable/buttonpress"-->
-                <!--android:layout_alignParentRight="true"-->
-                <!--android:layout_centerVertical="true"-->
-                <!--android:layout_marginRight="10dp"-->
-                <!--android:src="@drawable/ic_action_list">-->
-        <!--</ImageButton>-->
+
         <ImageButton
                 android:id="@+id/refreshButtonOnActivity"
                 android:layout_width="wrap_content"
@@ -87,18 +79,25 @@
         </Button>
     </RelativeLayout>
     <LinearLayout android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#ffffff">
-    <ListView
-           android:id="@+id/listView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
-    </ListView>
+                  android:layout_height="match_parent"
+                  android:background="#ffffff">
+        <ListView
+                android:id="@+id/listView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+        </ListView>
+        <!--<TextView-->
+                <!--android:id="@+id/otherText"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="加载更多"-->
+                <!--android:gravity="center">-->
+        <!--</TextView>-->
         <RelativeLayout android:layout_width="match_parent"
                         android:layout_height="match_parent"
-               android:id="@+id/mapparent"
-                android:visibility="gone">
+                        android:id="@+id/mapparent"
+                        android:visibility="gone">
             <com.baidu.mapapi.map.MapView android:id="@+id/bmapView"
                                           android:layout_width="fill_parent"
                                           android:layout_height="fill_parent"
@@ -136,9 +135,10 @@
                     android:background="@drawable/findposition"
                     android:layout_alignRight="@+id/bmapView"
                     android:layout_alignTop="@+id/linearLayout"
-                    android:layout_marginRight="10dp">
+                    android:layout_marginRight="10dp"
+                    >
             </Button>
         </RelativeLayout>
-        </LinearLayout>
+    </LinearLayout>
 </LinearLayout>
 

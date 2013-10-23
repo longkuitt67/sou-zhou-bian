@@ -11,7 +11,7 @@ public class MapApplication extends Application {
     private static MapApplication mInstance = null;
     public boolean m_bKeyRight = true;
     BMapManager mBMapManager = null;
-    public static final String strKey = "20deb62852b3e32be20f587e798849db";
+    public static final String strKey = "AB0f4e783ab452277aa2d7deb9517554";
 
     @Override
     public void onCreate() {

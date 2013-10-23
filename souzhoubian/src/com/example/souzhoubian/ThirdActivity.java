@@ -368,9 +368,18 @@ public class ThirdActivity extends Activity {
                 new String[]{"text"},
                 new int[]{R.id.firstTextView}){
             @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
+            public View getView(final int position, View convertView, ViewGroup parent) {
                 View view =super.getView(position, convertView, parent);
                 button=(Button)view.findViewById(R.id.step) ;
+                view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent=new Intent();
+                        intent.putExtra("name",data.get(position).get("text").toString())  ;
+                        intent.setClass(ThirdActivity.this,MyActivity.class);
+                        startActivity(intent);
+                    }
+                });
                 button.setVisibility(View.INVISIBLE);
                 return view;    //To change body of overridden methods use File | Settings | File Templates.
             }

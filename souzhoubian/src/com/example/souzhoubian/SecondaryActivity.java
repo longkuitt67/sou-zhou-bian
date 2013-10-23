@@ -47,7 +47,7 @@ public class SecondaryActivity extends Activity{
         setContentView(R.layout.secondary);
 
         String[] strings= new String[]{};
-       String  twoLevelName =  getIntent().getStringExtra("name");
+        String  twoLevelName =  getIntent().getStringExtra("name");
         TextView title= (TextView) findViewById(R.id.secondTitle);
         title.setText(twoLevelName);
         if(twoLevelName.equals("餐饮服务")){
@@ -95,7 +95,9 @@ public class SecondaryActivity extends Activity{
                 view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+
                         Intent intent=new Intent();
+                        intent.putExtra("name",data.get(position).get("text").toString())  ;
                         intent.setClass(SecondaryActivity.this,MyActivity.class);
                         startActivity(intent);
                     }
@@ -115,6 +117,14 @@ public class SecondaryActivity extends Activity{
             }
         };
         listView2.setAdapter(adapter);
+        listView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent=new Intent();
+                intent.setClass(SecondaryActivity.this,MyActivity.class);
+                startActivity(intent);
+            }
+        });
 
         backButton= (ImageButton) findViewById(R.id.restaurant_nav_back);
         backButton.setOnClickListener(new View.OnClickListener() {
